@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:product_list_with_cart/models/product.dart';
+import 'package:product_list_with_cart/screens/confirm_screen.dart';
 
 class Cart extends StatelessWidget {
   final void Function(Product product) removeFromCart;
+  final void Function() resetCart;
   final Map<Product, int> cart;
-  const Cart(this.cart, {super.key, required this.removeFromCart});
+  const Cart(this.cart,
+      {super.key, required this.removeFromCart, required this.resetCart});
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +67,7 @@ class Cart extends StatelessWidget {
                               ),
                               const SizedBox(width: 20),
                               Text(
-                                "\$${key.price * (cart[key] as int)}",
+                                "\$${(key.price * (cart[key] as int)).toStringAsFixed(2)}",
                                 style: const TextStyle(
                                   fontSize: 18,
                                   color: Color.fromRGBO(130, 110, 110, 1),
@@ -150,10 +153,11 @@ class Cart extends StatelessWidget {
                     children: [
                       TextSpan(text: "This is a "),
                       TextSpan(
-                          text: "carbon-neutral",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                          )),
+                        text: "carbon-neutral",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                       TextSpan(text: " delivery"),
                     ],
                   ),
@@ -172,7 +176,18 @@ class Cart extends StatelessWidget {
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               )),
-          onPressed: () {},
+          onPressed: () {
+            showModalBottomSheet(
+              isScrollControlled: true,
+              context: context,
+              builder: (context) {
+                return ConfirmScreen(
+                  cart: cart,
+                  resetCart: resetCart,
+                );
+              },
+            );
+          },
           child: const Text("Confirm Order"),
         )
       ],

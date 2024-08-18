@@ -59,6 +59,7 @@ class _MainScreenState extends State<MainScreen> {
                       : Cart(
                           cart,
                           removeFromCart: removeFromCart,
+                          resetCart: resetCart,
                         ),
                 ),
               )
@@ -72,6 +73,12 @@ class _MainScreenState extends State<MainScreen> {
   void removeFromCart(Product product) {
     setState(() {
       cart.remove(product);
+    });
+  }
+
+  void resetCart() {
+    setState(() {
+      cart.clear();
     });
   }
 }
