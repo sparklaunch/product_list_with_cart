@@ -8,6 +8,7 @@ void main() {
         fontFamily: "RedHat",
       ),
       home: const Scaffold(
+        backgroundColor: Color.fromRGBO(251, 247, 244, 1),
         body: MainScreen(),
       ),
     ),
